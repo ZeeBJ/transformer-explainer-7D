@@ -28,7 +28,7 @@ _IEEE VIS 2024 海报展示_
 #### 步骤
 
 ```bash
-git clone https://github.com/poloclub/transformer-explainer.git
+git clone https://github.com/ZeeBJ/transformer-explainer-7D.git
 cd transformer-explainer
 npm install
 npm run dev
