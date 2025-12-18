@@ -1,0 +1,338 @@
+{
+	"common": {
+		"generate": "Generate",
+		"example": "Example",
+		"examples": "Examples",
+		"temperature": "Temperature",
+		"sampling": "Sampling",
+		"probabilities": "Probabilities",
+		"token": "Token",
+		"tokens": "Tokens",
+		"attention": "Attention",
+		"embedding": "Embedding",
+		"layer": "Layer",
+		"block": "Block",
+		"close": "Close",
+		"logits": "Logits",
+		"scaledLogits": "Scaled logits",
+		"softmax": "Softmax",
+		"normalization": "Normalization"
+	},
+	"inputForm": {
+		"placeholder": "Test your own input text",
+		"generate": "Generate",
+		"mobileHint": "Try the examples. Please use a desktop computer to input GPT-2 prompts directly.",
+		"downloadingHint": "Try the examples while GPT-2 model is being downloaded (600MB)",
+		"wordLimit": "You can enter up to {limit} words."
+	},
+	"topbar": {
+		"title": "Transformer Explainer"
+	},
+	"temperature": {
+		"label": "Temperature",
+		"description": "Changes output probability distribution and randomness of next token."
+	},
+	"sampling": {
+		"label": "Sampling",
+		"description": "Changes how next token is selected from probability distribution.",
+		"topK": "Top-K",
+		"topP": "Top-P",
+		"softmaxAndTopP": "Softmax & Top-p"
+	},
+	"linearSoftmax": {
+		"title": "Probabilities",
+		"tokenId": "Token ID"
+	},
+	"textbook": {
+		"whatIsTransformer": {
+			"title": "What is Transformer?",
+			"content": "<p><strong>Transformer</strong> is the core architecture behind modern AI, powering models like ChatGPT and Gemini. Introduced in 2017, it revolutionized how AI processes information. The same architecture is used for training on massive datasets and for inference to generate outputs. Here we use GPT-2 (small), simpler than newer ones but perfect for learning the fundamentals.</p>"
+		},
+		"howTransformersWork": {
+			"title": "How Transformers Work?",
+			"content": "<p>Transformers aren't magic—they build text step by step by asking:</p><blockquote class=\"question\">\"What is the most probable next word that will follow this input?\"</blockquote><p>Here we explore how a trained model generates text. Write your own text or use an example, then click <strong>Generate</strong> to see it in action. If the model isn't ready yet, try another <strong>Example</strong>.</p>"
+		},
+		"transformerArchitecture": {
+			"title": "Transformer Architecture",
+			"content": "<p>Transformer has three main parts:</p><div class=\"numbered-list\"><div class=\"numbered-item\"><span class=\"number-circle\">1</span><div class=\"item-content\"><strong>Embeddings</strong> turn text into numbers.</div></div><div class=\"numbered-item\"><span class=\"number-circle\">2</span><div class=\"item-content\"><strong>Transformer blocks</strong> mix information with Self-Attention and refine it with an MLP.</div></div><div class=\"numbered-item\"><span class=\"number-circle\">3</span><div class=\"item-content\"><strong>Probabilities</strong> determine the likelihood of each next token.</div></div></div>"
+		},
+		"embedding": {
+			"title": "Embedding",
+			"content": "<p>Before a Transformer can use text, it first breaks it into small units and represents each as a list of numbers (vector). This process is called <strong>embedding</strong>, and the term can refer to both the process and the resulting vector.</p><p>In this tool, each vector appears as a rectangle, and hovering over it shows its size.</p>"
+		},
+		"tokenEmbedding": {
+			"title": "Token Embedding",
+			"content": "<p><strong>Tokenization</strong> splits input text into tokens—small units like words or parts of words. GPT-2 (small) has 50,257 token vocabulary, each with a unique ID.</p><p>In the <strong>token embedding</strong> step, every token is matched to a 768-number vector from a large lookup table. These vectors are learned during training to best represent each token's meaning.</p>"
+		},
+		"positionalEncoding": {
+			"title": "Positional Encoding",
+			"content": "<p>Word order matters in language. <strong>Positional encoding</strong> gives each token information about its place in the sequence.</p><p>GPT-2 does this by adding a learned positional embedding to the token's embedding, but newer models may use other methods, like RoPE, which encodes position by rotating certain vectors. All aim to help the model understand order in text.</p>"
+		},
+		"blocks": {
+			"title": "Repetitive Transformer Blocks",
+			"content": "<p>A <strong>Transformer block</strong> is the main unit of processing in the model. It has two parts:</p><ul><li><strong>Multi-head self-attention</strong> – lets tokens share information</li><li><strong>MLP</strong> – refines each token's details</li></ul><p>Models stack many blocks so token representations become richer as they pass through. GPT-2 (small) has 12 of them.</p>"
+		},
+		"selfAttention": {
+			"title": "Multi-Head Self Attention",
+			"content": "<p><strong>Self-attention</strong> lets the model decide which parts of the input are most relevant to each token. This helps it capture meaning and relationships, even between far-apart words.</p><p>In <strong>multi-head</strong> form, the model runs several attention processes in parallel, each focusing on different patterns in the text.</p>"
+		},
+		"qkv": {
+			"title": "Query, Key, Value",
+			"content": "<p>To perform self-attention, each token's embedding is transformed into <span class=\"highlight\">three new embeddings</span>—<span class=\"blue\">Query</span>, <span class=\"red\">Key</span>, and <span class=\"green\">Value</span>. This transformation is done by applying different weights and biases to each token embedding. These parameters (weights and biases), are optimized through training.</p><p>Once created, <span class=\"blue\">Queries</span> compare with <span class=\"red\">Keys</span> to measure relevance, and this relevance is used to weight the <span class=\"green\">Values</span>.</p>"
+		},
+		"multiHead": {
+			"title": "Multi-head",
+			"content": "<p>After creating <span class=\"blue\">Q</span>, <span class=\"red\">K</span>, and <span class=\"green\">V</span> embeddings, the model splits them into several <strong>heads</strong> (12 in GPT-2 small). Each head works with its own smaller set of <span class=\"blue\">Q</span>/<span class=\"red\">K</span>/<span class=\"green\">V</span>, focusing on different patterns in the text—like grammar, meaning, or long-range links.</p><p>Multiple heads let the model learn many kinds of relationships in parallel, making its understanding richer.</p>"
+		},
+		"maskedSelfAttention": {
+			"title": "Masked Self Attention",
+			"content": "<p>In each head, the model decides how much each token focuses on others:</p><ul><li><strong>Dot Product</strong> – Multiply matching numbers in <span class=\"blue\">Query</span>/<span class=\"red\">Key</span> vectors, sum to get <span class=\"purple\">attention scores</span>.</li><li><strong>Mask</strong> – Hide future tokens so it can't peek ahead.</li><li><strong>Softmax</strong> – Convert scores to probabilities, each row summing to 1, showing focus on earlier tokens.</li></ul>"
+		},
+		"outputConcatenation": {
+			"title": "Attention Output & Concatenation",
+			"content": "<p>Each head <span class=\"highlight\">multiplies its <span class=\"purple\">attention scores</span> with the <span class=\"green\">Value</span> embeddings to produce its attention output</span>—a refined representation of each token after considering context.</p><p>GPT-2 (small) has 12 such outputs, which are concatenated to form a single vector of the original size (768 numbers).</p>"
+		},
+		"mlp": {
+			"title": "MLP (Multi-Layer Perceptron)",
+			"content": "<p>The attention output goes through an <strong>MLP</strong> to refine token representations. A Linear layer changes embedding values and size using learned weights and bias, then a non-linear activation decides how much each value passes.</p><p>Many activation types exist; GPT-2 uses <strong>GELU</strong>, which lets small values pass partially and large values pass fully, helping capture both subtle and strong patterns.</p>"
+		},
+		"outputLogit": {
+			"title": "Output Logit",
+			"content": "<p>After all Transformer blocks, the last token's output embedding, enriched with context from all previous tokens, is multiplied by learned weights in a final layer.</p><p>This produces <strong>logits</strong>, 50,257 numbers—one for each token in GPT-2's vocabulary—that indicate how likely each token is to come next.</p>"
+		},
+		"outputProbabilities": {
+			"title": "Probabilities",
+			"content": "<p>Logits are just raw scores. To make them easier to interpret, we convert them into <strong>probabilities</strong> between 0 and 1, where all add up to 1. This tells us the likelihood of each token being the next word.</p><p>Instead of always picking the highest-probability token, we can use different selection strategies to balance safety and creativity in the generated text.</p>"
+		},
+		"temperature": {
+			"title": "Temperature",
+			"content": "<p><strong>Temperature</strong> works by scaling the logits before turning them into probabilities. A <strong>low temperature</strong> (e.g., 0.2) makes large logits even larger and small ones smaller, favoring the highest-scoring tokens and leading to more <strong>predictable choices</strong>. A <strong>high temperature</strong> (e.g., 1.0 or above) flattens the differences, making less likely tokens more competitive and leading to more <strong>creative outputs</strong>.</p>"
+		},
+		"sampling": {
+			"title": "Sampling Strategy",
+			"content": "<p>Finally, we need a strategy to pick the next token. Many exist, but here are common ones: Greedy search picks the top one. <strong>Top-k</strong> keeps only the k most likely tokens, and <strong>top-p</strong> keeps the smallest set whose total probability is at least p—trimming unlikely ones early.</p><p>Then softmax turns the remaining logits into probabilities, and one token is picked at random from the allowed set.</p>"
+		},
+		"residual": {
+			"title": "Residual Connection",
+			"content": "<p>Transformers have extra features that enhance the model performance but aren't core to understanding the basics. For example, a <strong>residual connection</strong> adds a layer's input to its output, keeping information and learning signals from fading through many layers. In GPT-2, it's used twice per block to train deeper stacks effectively.</p>"
+		},
+		"layerNormalization": {
+			"title": "Layer Normalization",
+			"content": "<p><strong>Layer Normalization</strong> helps stabilize both training and inference by adjusting input numbers so their mean and variance stay consistent. This makes the model less sensitive to its starting weights and helps it learn more effectively. In GPT-2, it's applied before self-attention, before the MLP, and once more before the final output.</p>"
+		},
+		"dropout": {
+			"title": "Dropout",
+			"content": "<p>During training, <strong>dropout</strong> randomly turns off some connections between numbers so the model doesn't overfit to specific patterns. This helps it learn features that generalize better. GPT-2 uses it, but newer LLMs often skip it because they train on huge datasets and overfitting is less of a problem. In inference, dropout is turned off.</p>"
+		}
+	},
+	"article": {
+		"whatIsTransformer": {
+			"title": "What is a Transformer?",
+			"intro": "Transformer is a neural network architecture that has fundamentally changed the approach to Artificial Intelligence. Transformer was first introduced in the seminal paper",
+			"paperLink": "\"Attention is All You Need\"",
+			"paperTitle": "ACM Digital Library",
+			"intro2": "in 2017 and has since become the go-to architecture for deep learning models, powering text-generative models like OpenAI's",
+			"intro3": "Beyond text, Transformer is also applied in",
+			"audioGeneration": "audio generation",
+			"imageRecognition": "image recognition",
+			"proteinPrediction": "protein structure prediction",
+			"gamePlaying": "game playing",
+			"intro4": "demonstrating its versatility across numerous domains.",
+			"principle": "Fundamentally, text-generative Transformer models operate on the principle of",
+			"nextWordPrediction": "next-word prediction",
+			"principle2": ": given a text prompt from the user, what is the",
+			"mostProbable": "most probable next word",
+			"principle3": "that will follow this input? The core innovation and power of Transformers lie in their use of self-attention mechanism, which allows them to process entire sequences and capture long-range dependencies more effectively than previous architectures.",
+			"gpt2Intro": "GPT-2 family of models are prominent examples of text-generative Transformers. Transformer Explainer is powered by the",
+			"gpt2Link": "GPT-2",
+			"gpt2Title": "Hugging Face",
+			"gpt2Intro2": "(small) model which has 124 million parameters. While it is not the latest or most powerful Transformer model, it shares many of the same architectural components and principles found in the current state-of-the-art models making it an ideal starting point for understanding the basics."
+		},
+		"transformerArchitecture": {
+			"title": "Transformer Architecture",
+			"intro": "Every text-generative Transformer consists of these",
+			"threeComponents": "three key components",
+			"embeddingTitle": "Embedding",
+			"embeddingDesc": "Text input is divided into smaller units called tokens, which can be words or subwords. These tokens are converted into numerical vectors called embeddings, which capture the semantic meaning of words.",
+			"blockTitle": "Transformer Block",
+			"blockDesc": "is the fundamental building block of the model that processes and transforms the input data. Each block includes:",
+			"attentionTitle": "Attention Mechanism",
+			"attentionDesc": "the core component of the Transformer block. It allows tokens to communicate with other tokens, capturing contextual information and relationships between words.",
+			"mlpTitle": "MLP (Multilayer Perceptron) Layer",
+			"mlpDesc": "a feed-forward network that operates on each token independently. While the goal of the attention layer is to route information between tokens, the goal of the MLP is to refine each token's representation.",
+			"outputTitle": "Output Probabilities",
+			"outputDesc": "The final linear and softmax layers transform the processed embeddings into probabilities, enabling the model to make predictions about the next token in a sequence."
+		},
+		"embedding": {
+			"title": "Embedding",
+			"intro": "Let's say you want to generate text using a Transformer model. You add the prompt like this one:",
+			"exampleCode": "\"Data visualization empowers users to\"",
+			"intro2": "This input needs to be converted into a format that the model can understand and process. That is where embedding comes in: it transforms the text into a numerical representation that the model can work with. To convert a prompt into embedding, we need to 1) tokenize the input, 2) obtain token embeddings, 3) add positional information, and finally 4) add up token and position encodings to get the final embedding. Let's see how each of these steps is done.",
+			"figure1": "Figure",
+			"figure1Desc": "Expanding the Embedding layer view, showing how the input prompt is converted to a vector representation. The process involves",
+			"step1": "(1)",
+			"step1Name": "Tokenization,",
+			"step2": "(2)",
+			"step2Name": "Token Embedding,",
+			"step3": "(3)",
+			"step3Name": "Positional Encoding,",
+			"step4": "and (4)",
+			"step4Name": "Final Embedding.",
+			"tokenizationTitle": "Step 1: Tokenization",
+			"tokenizationDesc": "Tokenization is the process of breaking down the input text into smaller, more manageable pieces called tokens. These tokens can be a word or a subword. The words",
+			"tokenizationCode1": "\"Data\"",
+			"tokenizationDesc2": "and",
+			"tokenizationCode2": "\"visualization\"",
+			"tokenizationDesc3": "correspond to unique tokens, while the word",
+			"tokenizationCode3": "\"empowers\"",
+			"tokenizationDesc4": "is split into two tokens. The full vocabulary of tokens is decided before training the model: GPT-2's vocabulary has",
+			"tokenizationCode4": "50,257",
+			"tokenizationDesc5": "unique tokens. Now that we split our input text into tokens with distinct IDs, we can obtain their vector representation from embeddings.",
+			"tokenEmbeddingTitle": "Step 2. Token Embedding",
+			"tokenEmbeddingDesc": "GPT-2 (small) represents each token in the vocabulary as a 768-dimensional vector; the dimension of the vector depends on the model. These embedding vectors are stored in a matrix of shape",
+			"tokenEmbeddingCode": "(50,257, 768)",
+			"tokenEmbeddingDesc2": "containing approximately 39 million parameters! This extensive matrix allows the model to assign semantic meaning to each token.",
+			"positionalEncodingTitle": "Step 3. Positional Encoding",
+			"positionalEncodingDesc": "The Embedding layer also encodes information about each token's position in the input prompt. Different models use various methods for positional encoding. GPT-2 trains its own positional encoding matrix from scratch, integrating it directly into the training process.",
+			"finalEmbeddingTitle": "Step 4. Final Embedding",
+			"finalEmbeddingDesc": "Finally, we sum the token and positional encodings to get the final embedding representation. This combined representation captures both the semantic meaning of the tokens and their position in the input sequence."
+		},
+		"transformerBlock": {
+			"title": "Transformer Block",
+			"intro": "The core of the Transformer's processing lies in the Transformer block, which comprises multi-head self-attention and a Multi-Layer Perceptron layer. Most models consist of multiple such blocks that are stacked sequentially one after the other. The token representations evolve through layers, from the first block to the last one, allowing the model to build up an intricate understanding of each token. This layered approach leads to higher-order representations of the input. The GPT-2 (small) model we are examining consists of",
+			"blockCount": "12",
+			"intro2": "such blocks."
+		},
+		"selfAttention": {
+			"title": "Multi-Head Self-Attention",
+			"intro": "The self-attention mechanism enables the model to focus on relevant parts of the input sequence, allowing it to capture complex relationships and dependencies within the data. Let's look at how this self-attention is computed step-by-step.",
+			"qkvTitle": "Step 1: Query, Key, and Value Matrices",
+			"figure2": "Figure",
+			"figure2Desc": "Computing Query, Key, and Value matrices from the original embedding.",
+			"qkvDesc": "Each token's embedding vector is transformed into three vectors:",
+			"query": "Query (Q)",
+			"key": "Key (K)",
+			"value": "Value (V)",
+			"qkvDesc2": "These vectors are derived by multiplying the input embedding matrix with learned weight matrices for",
+			"qkvDesc3": "Here's a web search analogy to help us build some intuition behind these matrices:",
+			"queryDesc": "is the search text you type in the search engine bar. This is the token you want to",
+			"findInfo": "\"find more information about\"",
+			"keyDesc": "is the title of each web page in the search result window. It represents the possible tokens the query can attend to.",
+			"valueDesc": "is the actual content of web pages shown. Once we matched the appropriate search term (Query) with the relevant results (Key), we want to get the content (Value) of the most relevant pages.",
+			"qkvDesc4": "By using these QKV values, the model can calculate attention scores, which determine how much focus each token should receive when generating predictions.",
+			"multiHeadTitle": "Step 2: Multi-Head Splitting",
+			"multiHeadDesc": "vectors are split into multiple heads—in GPT-2 (small)'s case, into",
+			"multiHeadCount": "12",
+			"multiHeadDesc2": "heads. Each head processes a segment of the embeddings independently, capturing different syntactic and semantic relationships. This design facilitates parallel learning of diverse linguistic features, enhancing the model's representational power.",
+			"maskedTitle": "Step 3: Masked Self-Attention",
+			"maskedDesc": "In each head, we perform masked self-attention calculations. This mechanism allows the model to generate sequences by focusing on relevant parts of the input while preventing access to future tokens.",
+			"figure3": "Figure",
+			"figure3Desc": "Using Query, Key, and Value matrices to calculate masked self-attention.",
+			"attentionScore": "Attention Score",
+			"attentionScoreDesc": "The dot product of",
+			"attentionScoreDesc2": "and",
+			"attentionScoreDesc3": "matrices determines the alignment of each query with each key, producing a square matrix that reflects the relationship between all input tokens.",
+			"masking": "Masking",
+			"maskingDesc": "A mask is applied to the upper triangle of the attention matrix to prevent the model from accessing future tokens, setting these values to negative infinity. The model needs to learn how to predict the next token without \"peeking\" into the future.",
+			"softmax": "Softmax",
+			"softmaxDesc": "After masking, the attention score is converted into probability by the softmax operation which takes the exponent of each attention score. Each row of the matrix sums up to one and indicates the relevance of every other token to the left of it.",
+			"outputTitle": "Step 4: Output and Concatenation",
+			"outputDesc": "The model uses the masked self-attention scores and multiplies them with the",
+			"outputDesc2": "matrix to get the",
+			"finalOutput": "final output",
+			"outputDesc3": "of the self-attention mechanism. GPT-2 has",
+			"outputCount": "12",
+			"outputDesc4": "self-attention heads, each capturing different relationships between tokens. The outputs of these heads are concatenated and passed through a linear projection."
+		},
+		"mlp": {
+			"title": "MLP: Multi-Layer Perceptron",
+			"figure4": "Figure",
+			"figure4Desc": "Using MLP layer to project the self-attention representations into higher dimensions to enhance the model's representational capacity.",
+			"intro": "After the multiple heads of self-attention capture the diverse relationships between the input tokens, the concatenated outputs are passed through the Multilayer Perceptron (MLP) layer to enhance the model's representational capacity. The MLP block consists of two linear transformations with a GELU activation function in between. The first linear transformation increases the dimensionality of the input four-fold from",
+			"dim1": "768",
+			"intro2": "to",
+			"dim2": "3072",
+			"intro3": "The second linear transformation reduces the dimensionality back to the original size of",
+			"dim3": "768",
+			"intro4": "ensuring that the subsequent layers receive inputs of consistent dimensions. Unlike the self-attention mechanism, the MLP processes tokens independently and simply map them from one representation to another."
+		},
+		"outputProbabilities": {
+			"title": "Output Probabilities",
+			"intro": "After the input has been processed through all Transformer blocks, the output is passed through the final linear layer to prepare it for token prediction. This layer projects the final representations into a",
+			"vocabSize": "50,257",
+			"intro2": "dimensional space, where every token in the vocabulary has a corresponding value called",
+			"logit": "logit",
+			"intro3": "Any token can be the next word, so this process allows us to simply rank these tokens by their likelihood of being that next word. We then apply the softmax function to convert the logits into a probability distribution that sums to one. This will allow us to sample the next token based on its likelihood.",
+			"figure5": "Figure",
+			"figure5Desc": "Each token in the vocabulary is assigned a probability based on the model's output logits. These probabilities determine the likelihood of each token being the next word in the sequence.",
+			"temperatureIntro": "The final step is to generate the next token by sampling from this distribution The",
+			"temperatureParam": "temperature",
+			"temperatureIntro2": "hyperparameter plays a critical role in this process. Mathematically speaking, it is a very simple operation: model output logits are simply divided by the",
+			"temperature1": "temperature = 1",
+			"temperature1Desc": ": Dividing logits by one has no effect on the softmax outputs.",
+			"temperature2": "temperature < 1",
+			"temperature2Desc": ": Lower temperature makes the model more confident and deterministic by sharpening the probability distribution, leading to more predictable outputs.",
+			"temperature3": "temperature > 1",
+			"temperature3Desc": ": Higher temperature creates a softer probability distribution, allowing for more randomness in the generated text – what some refer to as model",
+			"creativity": "\"creativity\"",
+			"samplingIntro": "In addition, the sampling process can be further refined using",
+			"topK": "top-k",
+			"samplingIntro2": "and",
+			"topP": "top-p",
+			"samplingIntro3": "parameters:",
+			"topKSampling": "top-k sampling",
+			"topKSamplingDesc": ": Limits the candidate tokens to the top k tokens with the highest probabilities, filtering out less likely options.",
+			"topPSampling": "top-p sampling",
+			"topPSamplingDesc": ": Considers the smallest set of tokens whose cumulative probability exceeds a threshold p, ensuring that only the most likely tokens contribute while still allowing for diversity.",
+			"tuning": "By tuning",
+			"tuning2": "and",
+			"tuning3": "you can balance between deterministic and diverse outputs, tailoring the model's behavior to your specific needs."
+		},
+		"advancedFeatures": {
+			"title": "Advanced Architectural Features",
+			"intro": "There are several advanced architectural features that enhance the performance of Transformer models. While important for the model's overall performance, they are not as important for understanding the core concepts of the architecture. Layer Normalization, Dropout, and Residual Connections are crucial components in Transformer models, particularly during the training phase. Layer Normalization stabilizes training and helps the model converge faster. Dropout prevents overfitting by randomly deactivating neurons. Residual Connections allows gradients to flow directly through the network and helps to prevent the vanishing gradient problem.",
+			"layerNormTitle": "Layer Normalization",
+			"layerNormDesc": "Layer Normalization helps to stabilize the training process and improves convergence. It works by normalizing the inputs across the features, ensuring that the mean and variance of the activations are consistent. This normalization helps mitigate issues related to internal covariate shift, allowing the model to learn more effectively and reducing the sensitivity to the initial weights. Layer Normalization is applied twice in each Transformer block, once before the self-attention mechanism and once before the MLP layer.",
+			"dropoutTitle": "Dropout",
+			"dropoutDesc": "Dropout is a regularization technique used to prevent overfitting in neural networks by randomly setting a fraction of model weights to zero during training. This encourages the model to learn more robust features and reduces dependency on specific neurons, helping the network generalize better to new, unseen data. During model inference, dropout is deactivated. This essentially means that we are using an ensemble of the trained subnetworks, which leads to a better model performance.",
+			"residualTitle": "Residual Connections",
+			"residualDesc": "Residual connections were first introduced in the ResNet model in 2015. This architectural innovation revolutionized deep learning by enabling the training of very deep neural networks. Essentially, residual connections are shortcuts that bypass one or more layers, adding the input of a layer to its output. This helps mitigate the vanishing gradient problem, making it easier to train deep networks with multiple Transformer blocks stacked on top of each other. In GPT-2, residual connections are used twice within each Transformer block: once before the MLP and once after, ensuring that gradients flow more easily, and earlier layers receive sufficient updates during backpropagation."
+		},
+		"interactiveFeatures": {
+			"title": "Interactive Features",
+			"intro": "Transformer Explainer is built to be interactive and allows you to explore the inner workings of the Transformer. Here are some of the interactive features you can play with:",
+			"feature1": "Input your own text sequence",
+			"feature1Desc": "to see how the model processes it and predicts the next word. Explore attention weights, intermediate computations, and see how the final output probabilities are calculated.",
+			"feature2": "Use temperature slider",
+			"feature2Desc": "to control the randomness of the model's predictions. Explore how you can make the model output more deterministic or more creative by changing the temperature value.",
+			"feature3": "Select top-k and top-p sampling methods",
+			"feature3Desc": "to adjust sampling behavior during inference. Experiment with different values and see how the probability distribution changes and influences the model's predictions.",
+			"feature4": "Interact with attention maps",
+			"feature4Desc": "to see how the model focuses on different tokens in the input sequence. Hover over tokens to highlight their attention weights and explore how the model captures context and relationships between words."
+		},
+		"videoTutorial": {
+			"title": "Video Tutorial"
+		},
+		"implementation": {
+			"title": "How is Transformer Explainer Implemented?",
+			"intro": "Transformer Explainer features a live GPT-2 (small) model running directly in the browser. This model is derived from the PyTorch implementation of GPT by Andrej Karpathy's",
+			"nanoGPT": "nanoGPT project",
+			"nanoGPTTitle": "Github",
+			"intro2": "and has been converted to",
+			"onnx": "ONNX Runtime",
+			"onnxTitle": "ONNX",
+			"intro3": "for seamless in-browser execution. The interface is built using JavaScript, with",
+			"svelte": "Svelte",
+			"svelteTitle": "Svelte",
+			"intro4": "as a front-end framework and",
+			"d3": "D3.js",
+			"d3Title": "D3",
+			"intro5": "for creating dynamic visualizations. Numerical values are updated live following the user input."
+		},
+		"credits": {
+			"title": "Who developed the Transformer Explainer?",
+			"intro": "Transformer Explainer was created by",
+			"at": "at the Georgia Institute of Technology."
+		}
+	}
+}

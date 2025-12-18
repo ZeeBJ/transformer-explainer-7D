@@ -1,0 +1,338 @@
+{
+	"common": {
+		"generate": "生成",
+		"example": "示例",
+		"examples": "示例",
+		"temperature": "温度",
+		"sampling": "采样",
+		"probabilities": "概率",
+		"token": "词元",
+		"tokens": "词元",
+		"attention": "注意力",
+		"embedding": "嵌入",
+		"layer": "层",
+		"block": "块",
+		"close": "关闭",
+		"logits": "逻辑值",
+		"scaledLogits": "缩放逻辑值",
+		"softmax": "Softmax",
+		"normalization": "归一化"
+	},
+	"inputForm": {
+		"placeholder": "输入您自己的文本进行测试",
+		"generate": "生成",
+		"mobileHint": "尝试示例。请使用桌面电脑直接输入 GPT-2 提示。",
+		"downloadingHint": "在 GPT-2 模型下载期间（600MB）可以尝试示例",
+		"wordLimit": "您最多可以输入 {limit} 个词。"
+	},
+	"topbar": {
+		"title": "Transformer 解释器"
+	},
+	"temperature": {
+		"label": "温度",
+		"description": "改变输出概率分布和下一个词元的随机性。"
+	},
+	"sampling": {
+		"label": "采样",
+		"description": "改变如何从概率分布中选择下一个词元。",
+		"topK": "Top-K",
+		"topP": "Top-P",
+		"softmaxAndTopP": "Softmax & Top-p"
+	},
+	"linearSoftmax": {
+		"title": "概率",
+		"tokenId": "词元 ID"
+	},
+	"textbook": {
+		"whatIsTransformer": {
+			"title": "什么是 Transformer？",
+			"content": "<p><strong>Transformer</strong> 是现代 AI 的核心架构，为 ChatGPT 和 Gemini 等模型提供动力。它于 2017 年推出，彻底改变了 AI 处理信息的方式。相同的架构用于在大规模数据集上进行训练，也用于推理生成输出。这里我们使用 GPT-2（小版本），虽然比新模型简单，但非常适合学习基础知识。</p>"
+		},
+		"howTransformersWork": {
+			"title": "Transformer 如何工作？",
+			"content": "<p>Transformer 不是魔法——它们通过逐步询问来构建文本：</p><blockquote class=\"question\">\"最可能跟随这个输入的下一个词是什么？\"</blockquote><p>这里我们探索训练好的模型如何生成文本。编写您自己的文本或使用示例，然后点击<strong>生成</strong>查看效果。如果模型还没准备好，请尝试另一个<strong>示例</strong>。</p>"
+		},
+		"transformerArchitecture": {
+			"title": "Transformer 架构",
+			"content": "<p>Transformer 有三个主要部分：</p><div class=\"numbered-list\"><div class=\"numbered-item\"><span class=\"number-circle\">1</span><div class=\"item-content\"><strong>嵌入</strong>将文本转换为数字。</div></div><div class=\"numbered-item\"><span class=\"number-circle\">2</span><div class=\"item-content\"><strong>Transformer 块</strong>通过自注意力机制混合信息，并通过 MLP 进行精炼。</div></div><div class=\"numbered-item\"><span class=\"number-circle\">3</span><div class=\"item-content\"><strong>概率</strong>确定每个下一个词元的可能性。</div></div></div>"
+		},
+		"embedding": {
+			"title": "嵌入",
+			"content": "<p>在 Transformer 使用文本之前，它首先将文本分解为小单元，并将每个单元表示为数字列表（向量）。这个过程称为<strong>嵌入</strong>，这个术语既可以指过程，也可以指结果向量。</p><p>在这个工具中，每个向量显示为一个矩形，将鼠标悬停在其上会显示其大小。</p>"
+		},
+		"tokenEmbedding": {
+			"title": "词元嵌入",
+			"content": "<p><strong>词元化</strong>将输入文本分割成词元——像单词或单词部分这样的小单元。GPT-2（小版本）有 50,257 个词元词汇表，每个词元都有唯一的 ID。</p><p>在<strong>词元嵌入</strong>步骤中，每个词元都与大型查找表中的 768 个数字向量匹配。这些向量在训练过程中学习，以最好地表示每个词元的含义。</p>"
+		},
+		"positionalEncoding": {
+			"title": "位置编码",
+			"content": "<p>词序在语言中很重要。<strong>位置编码</strong>为每个词元提供其在序列中位置的信息。</p><p>GPT-2 通过将学习到的位置嵌入添加到词元的嵌入中来实现这一点，但较新的模型可能使用其他方法，如 RoPE，它通过旋转某些向量来编码位置。所有这些方法都旨在帮助模型理解文本中的顺序。</p>"
+		},
+		"blocks": {
+			"title": "重复的 Transformer 块",
+			"content": "<p><strong>Transformer 块</strong>是模型中的主要处理单元。它有两个部分：</p><ul><li><strong>多头自注意力</strong>——让词元共享信息</li><li><strong>MLP</strong>——精炼每个词元的细节</li></ul><p>模型堆叠许多块，因此词元表示在通过时变得更加丰富。GPT-2（小版本）有 12 个这样的块。</p>"
+		},
+		"selfAttention": {
+			"title": "多头自注意力",
+			"content": "<p><strong>自注意力</strong>让模型决定输入的哪些部分与每个词元最相关。这有助于它捕获含义和关系，即使是在相距较远的词之间。</p><p>在<strong>多头</strong>形式中，模型并行运行多个注意力过程，每个过程专注于文本中的不同模式。</p>"
+		},
+		"qkv": {
+			"title": "查询、键、值",
+			"content": "<p>为了执行自注意力，每个词元的嵌入被转换为<span class=\"highlight\">三个新嵌入</span>——<span class=\"blue\">查询</span>、<span class=\"red\">键</span>和<span class=\"green\">值</span>。这种转换通过对每个词元嵌入应用不同的权重和偏置来完成。这些参数（权重和偏置）通过训练进行优化。</p><p>创建后，<span class=\"blue\">查询</span>与<span class=\"red\">键</span>进行比较以衡量相关性，这种相关性用于加权<span class=\"green\">值</span>。</p>"
+		},
+		"multiHead": {
+			"title": "多头",
+			"content": "<p>在创建<span class=\"blue\">Q</span>、<span class=\"red\">K</span>和<span class=\"green\">V</span>嵌入后，模型将它们分成几个<strong>头</strong>（GPT-2 小版本中有 12 个）。每个头使用自己较小的<span class=\"blue\">Q</span>/<span class=\"red\">K</span>/<span class=\"green\">V</span>集合，专注于文本中的不同模式——如语法、含义或长距离链接。</p><p>多个头让模型并行学习多种关系，使其理解更加丰富。</p>"
+		},
+		"maskedSelfAttention": {
+			"title": "掩码自注意力",
+			"content": "<p>在每个头中，模型决定每个词元对其他词元的关注程度：</p><ul><li><strong>点积</strong>——将<span class=\"blue\">查询</span>/<span class=\"red\">键</span>向量中匹配的数字相乘，求和得到<span class=\"purple\">注意力分数</span>。</li><li><strong>掩码</strong>——隐藏未来的词元，使其无法提前查看。</li><li><strong>Softmax</strong>——将分数转换为概率，每行总和为 1，显示对较早词元的关注。</li></ul>"
+		},
+		"outputConcatenation": {
+			"title": "注意力输出与拼接",
+			"content": "<p>每个头<span class=\"highlight\">将其<span class=\"purple\">注意力分数</span>与<span class=\"green\">值</span>嵌入相乘以产生其注意力输出</span>——在考虑上下文后每个词元的精炼表示。</p><p>GPT-2（小版本）有 12 个这样的输出，它们被拼接形成原始大小的单个向量（768 个数字）。</p>"
+		},
+		"mlp": {
+			"title": "MLP（多层感知器）",
+			"content": "<p>注意力输出通过<strong>MLP</strong>来精炼词元表示。线性层使用学习的权重和偏置改变嵌入值和大小，然后非线性激活决定每个值通过多少。</p><p>存在许多激活类型；GPT-2 使用<strong>GELU</strong>，它让小值部分通过，大值完全通过，有助于捕获微妙和强烈的模式。</p>"
+		},
+		"outputLogit": {
+			"title": "输出逻辑值",
+			"content": "<p>在所有 Transformer 块之后，最后一个词元的输出嵌入（由所有先前词元的上下文丰富）在最终层中与学习的权重相乘。</p><p>这产生<strong>逻辑值</strong>，50,257 个数字——GPT-2 词汇表中每个词元一个——表示每个词元接下来出现的可能性。</p>"
+		},
+		"outputProbabilities": {
+			"title": "概率",
+			"content": "<p>逻辑值只是原始分数。为了使它们更容易解释，我们将它们转换为 0 到 1 之间的<strong>概率</strong>，所有概率加起来为 1。这告诉我们每个词元成为下一个词的可能性。</p><p>我们不是总是选择最高概率的词元，而是可以使用不同的选择策略来平衡生成文本的安全性和创造性。</p>"
+		},
+		"temperature": {
+			"title": "温度",
+			"content": "<p><strong>温度</strong>通过在将它们转换为概率之前缩放逻辑值来工作。<strong>低温度</strong>（例如 0.2）使大逻辑值更大，小逻辑值更小，有利于得分最高的词元，导致更<strong>可预测的选择</strong>。<strong>高温度</strong>（例如 1.0 或更高）使差异变平，使不太可能的词元更具竞争力，导致更<strong>创造性的输出</strong>。</p>"
+		},
+		"sampling": {
+			"title": "采样策略",
+			"content": "<p>最后，我们需要一个策略来选择下一个词元。存在许多策略，但这里是一些常见的：贪婪搜索选择最上面的一个。<strong>Top-k</strong>只保留 k 个最可能的词元，<strong>top-p</strong>保留总概率至少为 p 的最小集合——提前修剪不太可能的词元。</p><p>然后 softmax 将剩余的逻辑值转换为概率，并从允许的集合中随机选择一个词元。</p>"
+		},
+		"residual": {
+			"title": "残差连接",
+			"content": "<p>Transformer 具有增强模型性能但并非理解基础知识的核心的额外功能。例如，<strong>残差连接</strong>将层的输入添加到其输出，保持信息和学习信号不会在多层中消失。在 GPT-2 中，每个块使用两次，以有效地训练更深的堆栈。</p>"
+		},
+		"layerNormalization": {
+			"title": "层归一化",
+			"content": "<p><strong>层归一化</strong>通过调整输入数字使其均值和方差保持一致，有助于稳定训练和推理。这使模型对其起始权重不太敏感，并帮助它更有效地学习。在 GPT-2 中，它在自注意力之前、MLP 之前以及最终输出之前再次应用。</p>"
+		},
+		"dropout": {
+			"title": "Dropout",
+			"content": "<p>在训练期间，<strong>dropout</strong>随机关闭数字之间的某些连接，以便模型不会过度拟合特定模式。这有助于它学习更好地泛化的特征。GPT-2 使用它，但较新的 LLM 经常跳过它，因为它们在巨大的数据集上训练，过度拟合不是问题。在推理中，dropout 被关闭。</p>"
+		}
+	},
+	"article": {
+		"whatIsTransformer": {
+			"title": "什么是 Transformer？",
+			"intro": "Transformer 是一种神经网络架构，它从根本上改变了人工智能的方法。Transformer 首次出现在开创性论文",
+			"paperLink": "\"Attention is All You Need\"",
+			"paperTitle": "ACM 数字图书馆",
+			"intro2": "中，自 2017 年以来已成为深度学习模型的首选架构，为 OpenAI 的",
+			"intro3": "等文本生成模型提供支持。除了文本，Transformer 还应用于",
+			"audioGeneration": "音频生成",
+			"imageRecognition": "图像识别",
+			"proteinPrediction": "蛋白质结构预测",
+			"gamePlaying": "游戏",
+			"intro4": "展示了其在众多领域的多功能性。",
+			"principle": "从根本上说，文本生成 Transformer 模型基于",
+			"nextWordPrediction": "下一个词预测",
+			"principle2": "的原理运行：给定用户的文本提示，",
+			"mostProbable": "最可能的下一个词",
+			"principle3": "是什么？Transformer 的核心创新和力量在于其使用的自注意力机制，这使得它们能够处理完整序列，并比之前的架构更有效地捕获长距离依赖关系。",
+			"gpt2Intro": "GPT-2 模型家族是文本生成 Transformer 的突出例子。Transformer Explainer 由",
+			"gpt2Link": "GPT-2",
+			"gpt2Title": "Hugging Face",
+			"gpt2Intro2": "（小版本）模型驱动，该模型拥有 1.24 亿个参数。虽然它不是最新或最强大的 Transformer 模型，但它共享了当前最先进模型中的许多架构组件和原理，使其成为理解基础知识的理想起点。"
+		},
+		"transformerArchitecture": {
+			"title": "Transformer 架构",
+			"intro": "每个文本生成 Transformer 都包含以下",
+			"threeComponents": "三个关键组件",
+			"embeddingTitle": "嵌入",
+			"embeddingDesc": "文本输入被分割成称为词元（tokens）的更小单元，可以是词或子词。这些词元被转换为称为嵌入（embeddings）的数值向量，捕获词语的语义意义。",
+			"blockTitle": "Transformer 块",
+			"blockDesc": "是模型处理和转换输入数据的基本构建块。每个块包括：",
+			"attentionTitle": "注意力机制",
+			"attentionDesc": "Transformer 块的核心组件。它允许词元与其他词元进行通信，捕获词语之间的上下文信息和关系。",
+			"mlpTitle": "MLP（多层感知器）层",
+			"mlpDesc": "一个前馈网络，独立地作用于每个词元。注意力层的目标是路由词元之间的信息，而 MLP 的目标是精炼每个词元的表示。",
+			"outputTitle": "输出概率",
+			"outputDesc": "最终的线性层和 softmax 层将处理后的嵌入转换为概率，使模型能够预测序列中的下一个词元。"
+		},
+		"embedding": {
+			"title": "嵌入",
+			"intro": "假设您想使用 Transformer 模型生成文本。您添加如下提示：",
+			"exampleCode": "\"Data visualization empowers users to\"",
+			"intro2": "此输入需要转换为模型可以理解和处理的格式。这就是嵌入的作用：它将文本转换为模型可以使用的数值表示。要将提示转换为嵌入，我们需要：1) 对输入进行词元化，2) 获取词元嵌入，3) 添加位置信息，最后 4) 将词元和位置编码相加以获得最终嵌入。让我们看看这些步骤是如何完成的。",
+			"figure1": "图",
+			"figure1Desc": "展开嵌入层视图，显示输入提示如何转换为向量表示。该过程涉及",
+			"step1": "(1)",
+			"step1Name": "词元化，",
+			"step2": "(2)",
+			"step2Name": "词元嵌入，",
+			"step3": "(3)",
+			"step3Name": "位置编码，",
+			"step4": "和 (4)",
+			"step4Name": "最终嵌入。",
+			"tokenizationTitle": "步骤 1：词元化",
+			"tokenizationDesc": "词元化是将输入文本分解为更小、更易管理的片段（称为词元）的过程。这些词元可以是词或子词。词",
+			"tokenizationCode1": "\"Data\"",
+			"tokenizationDesc2": "和",
+			"tokenizationCode2": "\"visualization\"",
+			"tokenizationDesc3": "对应唯一的词元，而词",
+			"tokenizationCode3": "\"empowers\"",
+			"tokenizationDesc4": "被分割成两个词元。词元的完整词汇表在训练模型之前确定：GPT-2 的词汇表有",
+			"tokenizationCode4": "50,257",
+			"tokenizationDesc5": "个唯一词元。现在我们已经将输入文本分割成具有不同 ID 的词元，我们可以从嵌入中获取它们的向量表示。",
+			"tokenEmbeddingTitle": "步骤 2：词元嵌入",
+			"tokenEmbeddingDesc": "GPT-2（小版本）将词汇表中的每个词元表示为 768 维向量；向量的维度取决于模型。这些嵌入向量存储在形状为",
+			"tokenEmbeddingCode": "(50,257, 768)",
+			"tokenEmbeddingDesc2": "的矩阵中，包含约 3900 万个参数！这个庞大的矩阵使模型能够为每个词元分配语义意义。",
+			"positionalEncodingTitle": "步骤 3：位置编码",
+			"positionalEncodingDesc": "嵌入层还编码有关每个词元在输入提示中位置的信息。不同的模型使用各种位置编码方法。GPT-2 从头开始训练自己的位置编码矩阵，将其直接集成到训练过程中。",
+			"finalEmbeddingTitle": "步骤 4：最终嵌入",
+			"finalEmbeddingDesc": "最后，我们将词元和位置编码相加以获得最终嵌入表示。这种组合表示捕获了词元的语义意义及其在输入序列中的位置。"
+		},
+		"transformerBlock": {
+			"title": "Transformer 块",
+			"intro": "Transformer 处理的核心在于 Transformer 块，它包含多头自注意力和多层感知器层。大多数模型由多个这样的块组成，这些块按顺序堆叠。词元表示通过层演化，从第一个块到最后一个块，使模型能够建立对每个词元的复杂理解。这种分层方法导致输入的高阶表示。我们正在检查的 GPT-2（小版本）模型包含",
+			"blockCount": "12",
+			"intro2": "个这样的块。"
+		},
+		"selfAttention": {
+			"title": "多头自注意力",
+			"intro": "自注意力机制使模型能够专注于输入序列的相关部分，使其能够捕获数据中的复杂关系和依赖关系。让我们看看这个自注意力是如何逐步计算的。",
+			"qkvTitle": "步骤 1：查询、键和值矩阵",
+			"figure2": "图",
+			"figure2Desc": "从原始嵌入计算查询、键和值矩阵。",
+			"qkvDesc": "每个词元的嵌入向量被转换为三个向量：",
+			"query": "查询 (Q)",
+			"key": "键 (K)",
+			"value": "值 (V)",
+			"qkvDesc2": "这些向量通过将输入嵌入矩阵与学习的权重矩阵相乘得到，分别用于",
+			"qkvDesc3": "以下是一个网络搜索类比，帮助我们建立对这些矩阵的直觉：",
+			"queryDesc": "是您在搜索引擎栏中输入的搜索文本。这是您想要",
+			"findInfo": "\"查找更多信息\"",
+			"keyDesc": "的词元。是搜索结果窗口中每个网页的标题。它表示查询可以关注的可能词元。",
+			"valueDesc": "是显示的网页的实际内容。一旦我们将适当的搜索词（查询）与相关结果（键）匹配，我们就希望获得最相关页面的内容（值）。",
+			"qkvDesc4": "通过使用这些 QKV 值，模型可以计算注意力分数，这决定了在生成预测时每个词元应该获得多少关注。",
+			"multiHeadTitle": "步骤 2：多头分割",
+			"multiHeadDesc": "向量被分割成多个头——在 GPT-2（小版本）的情况下，分割成",
+			"multiHeadCount": "12",
+			"multiHeadDesc2": "个头。每个头独立处理嵌入的一个片段，捕获不同的句法和语义关系。这种设计促进了不同语言特征的并行学习，增强了模型的表示能力。",
+			"maskedTitle": "步骤 3：掩码自注意力",
+			"maskedDesc": "在每个头中，我们执行掩码自注意力计算。这种机制使模型能够通过专注于输入的相关部分来生成序列，同时防止访问未来的词元。",
+			"figure3": "图",
+			"figure3Desc": "使用查询、键和值矩阵计算掩码自注意力。",
+			"attentionScore": "注意力分数",
+			"attentionScoreDesc": "查询",
+			"attentionScoreDesc2": "和",
+			"attentionScoreDesc3": "矩阵的点积确定每个查询与每个键的对齐，产生一个反映所有输入词元之间关系的方阵。",
+			"masking": "掩码",
+			"maskingDesc": "将掩码应用于注意力矩阵的上三角部分，以防止模型访问未来的词元，将这些值设置为负无穷。模型需要学习如何在不\"窥视\"未来的情况下预测下一个词元。",
+			"softmax": "Softmax",
+			"softmaxDesc": "掩码后，注意力分数通过 softmax 操作转换为概率，该操作取每个注意力分数的指数。矩阵的每一行总和为 1，表示对左侧其他词元的相关性。",
+			"outputTitle": "步骤 4：输出和拼接",
+			"outputDesc": "模型使用掩码自注意力分数并将它们与",
+			"outputDesc2": "矩阵相乘以获得自注意力机制的",
+			"finalOutput": "最终输出",
+			"outputDesc3": "GPT-2 有",
+			"outputCount": "12",
+			"outputDesc4": "个自注意力头，每个头捕获词元之间的不同关系。这些头的输出被拼接并通过线性投影传递。"
+		},
+		"mlp": {
+			"title": "MLP：多层感知器",
+			"figure4": "图",
+			"figure4Desc": "使用 MLP 层将自注意力表示投影到更高维度以增强模型的表示能力。",
+			"intro": "在多个自注意力头捕获输入词元之间的多样化关系后，拼接的输出通过多层感知器（MLP）层传递以增强模型的表示能力。MLP 块由两个线性变换组成，中间有一个 GELU 激活函数。第一个线性变换将输入的维度从",
+			"dim1": "768",
+			"intro2": "增加到四倍，达到",
+			"dim2": "3072",
+			"intro3": "第二个线性变换将维度降低回原始大小",
+			"dim3": "768",
+			"intro4": "确保后续层接收一致维度的输入。与自注意力机制不同，MLP 独立处理词元，并简单地将它们从一个表示映射到另一个表示。"
+		},
+		"outputProbabilities": {
+			"title": "输出概率",
+			"intro": "在输入通过所有 Transformer 块处理后，输出通过最终线性层传递以为词元预测做准备。该层将最终表示投影到",
+			"vocabSize": "50,257",
+			"intro2": "维空间，其中词汇表中的每个词元都有一个对应的值，称为",
+			"logit": "逻辑值",
+			"intro3": "任何词元都可以是下一个词，因此这个过程允许我们简单地根据这些词元成为下一个词的可能性对它们进行排序。然后我们应用 softmax 函数将逻辑值转换为总和为 1 的概率分布。这将允许我们根据可能性对下一个词元进行采样。",
+			"figure5": "图",
+			"figure5Desc": "根据模型的输出逻辑值，为词汇表中的每个词元分配一个概率。这些概率决定了每个词元成为序列中下一个词的可能性。",
+			"temperatureIntro": "最后一步是通过从该分布中采样来生成下一个词元。",
+			"temperatureParam": "温度",
+			"temperatureIntro2": "超参数在此过程中起着关键作用。从数学上讲，这是一个非常简单的操作：模型输出逻辑值简单地除以",
+			"temperature1": "temperature = 1",
+			"temperature1Desc": "：将逻辑值除以 1 对 softmax 输出没有影响。",
+			"temperature2": "temperature < 1",
+			"temperature2Desc": "：较低的温度通过锐化概率分布使模型更加自信和确定性，导致更可预测的输出。",
+			"temperature3": "temperature > 1",
+			"temperature3Desc": "：较高的温度创建更柔和的概率分布，允许生成文本中的更多随机性——有些人称之为模型的",
+			"creativity": "\"创造性\"",
+			"samplingIntro": "此外，可以使用",
+			"topK": "top-k",
+			"samplingIntro2": "和",
+			"topP": "top-p",
+			"samplingIntro3": "参数进一步细化采样过程：",
+			"topKSampling": "top-k 采样",
+			"topKSamplingDesc": "：将候选词元限制为概率最高的前 k 个词元，过滤掉不太可能的选项。",
+			"topPSampling": "top-p 采样",
+			"topPSamplingDesc": "：考虑累积概率超过阈值 p 的最小词元集合，确保只有最可能的词元贡献，同时仍允许多样性。",
+			"tuning": "通过调整",
+			"tuning2": "和",
+			"tuning3": "您可以在确定性和多样化输出之间取得平衡，根据您的特定需求定制模型的行为。"
+		},
+		"advancedFeatures": {
+			"title": "高级架构特性",
+			"intro": "有几个高级架构特性可以增强 Transformer 模型的性能。虽然对模型的整体性能很重要，但它们对理解架构的核心概念并不那么重要。层归一化、Dropout 和残差连接是 Transformer 模型中的关键组件，特别是在训练阶段。层归一化稳定训练并帮助模型更快收敛。Dropout 通过随机停用神经元来防止过拟合。残差连接允许梯度直接通过网络流动，并有助于防止梯度消失问题。",
+			"layerNormTitle": "层归一化",
+			"layerNormDesc": "层归一化有助于稳定训练过程并改善收敛性。它通过跨特征归一化输入来工作，确保激活的均值和方差保持一致。这种归一化有助于缓解与内部协变量偏移相关的问题，使模型能够更有效地学习，并降低对初始权重的敏感性。层归一化在每个 Transformer 块中应用两次，一次在自注意力机制之前，一次在 MLP 层之前。",
+			"dropoutTitle": "Dropout",
+			"dropoutDesc": "Dropout 是一种正则化技术，通过在训练期间随机将模型权重的一部分设置为零来防止神经网络中的过拟合。这鼓励模型学习更鲁棒的特征，并减少对特定神经元的依赖，帮助网络更好地泛化到新的、未见过的数据。在模型推理期间，dropout 被停用。这基本上意味着我们正在使用训练好的子网络的集成，这导致更好的模型性能。",
+			"residualTitle": "残差连接",
+			"residualDesc": "残差连接于 2015 年首次在 ResNet 模型中引入。这种架构创新通过使非常深的神经网络的训练成为可能，彻底改变了深度学习。本质上，残差连接是绕过一层或多层的快捷方式，将层的输入添加到其输出。这有助于缓解梯度消失问题，使训练具有多个堆叠在一起的 Transformer 块的深度网络变得更容易。在 GPT-2 中，残差连接在每个 Transformer 块内使用两次：一次在 MLP 之前，一次在 MLP 之后，确保梯度更容易流动，并且早期层在反向传播期间获得足够的更新。"
+		},
+		"interactiveFeatures": {
+			"title": "交互功能",
+			"intro": "Transformer Explainer 旨在具有交互性，允许您探索 Transformer 的内部工作原理。以下是一些您可以使用的交互功能：",
+			"feature1": "输入您自己的文本序列",
+			"feature1Desc": "以查看模型如何处理它并预测下一个词。探索注意力权重、中间计算，并查看最终输出概率是如何计算的。",
+			"feature2": "使用温度滑块",
+			"feature2Desc": "来控制模型预测的随机性。探索如何通过更改温度值使模型输出更加确定性或更具创造性。",
+			"feature3": "选择 top-k 和 top-p 采样方法",
+			"feature3Desc": "以调整推理期间的采样行为。尝试不同的值，看看概率分布如何变化并影响模型的预测。",
+			"feature4": "与注意力图交互",
+			"feature4Desc": "以查看模型如何专注于输入序列中的不同词元。将鼠标悬停在词元上以突出显示其注意力权重，并探索模型如何捕获上下文和词之间的关系。"
+		},
+		"videoTutorial": {
+			"title": "视频教程"
+		},
+		"implementation": {
+			"title": "Transformer Explainer 是如何实现的？",
+			"intro": "Transformer Explainer 具有直接在浏览器中运行的实时 GPT-2（小版本）模型。该模型源自 Andrej Karpathy 的 GPT PyTorch 实现",
+			"nanoGPT": "nanoGPT 项目",
+			"nanoGPTTitle": "Github",
+			"intro2": "并已转换为",
+			"onnx": "ONNX Runtime",
+			"onnxTitle": "ONNX",
+			"intro3": "以实现无缝的浏览器内执行。界面使用 JavaScript 构建，",
+			"svelte": "Svelte",
+			"svelteTitle": "Svelte",
+			"intro4": "作为前端框架，",
+			"d3": "D3.js",
+			"d3Title": "D3",
+			"intro5": "用于创建动态可视化。数值会根据用户输入实时更新。"
+		},
+		"credits": {
+			"title": "谁开发了 Transformer Explainer？",
+			"intro": "Transformer Explainer 由",
+			"at": "在佐治亚理工学院创建。"
+		}
+	}
+}
