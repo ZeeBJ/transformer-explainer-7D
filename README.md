@@ -5,7 +5,7 @@ Transformer Explainer is an interactive visualization tool designed to help anyo
 [![arxiv badge](https://img.shields.io/badge/arXiv-2408.04619-red)](https://arxiv.org/abs/2408.04619)
 
 <a href="https://youtu.be/TFUc41G2ikY" target="_blank"><img width="100%" src='https://github.com/user-attachments/assets/0a4d8888-6555-4df5-bc71-77f1299115c3'></a>
-[English](README.md) | 中文
+English | [中文](README_CN.md)
 ## Live Demo
 Try Transformer Explainer: http://poloclub.github.io/transformer-explainer
 
